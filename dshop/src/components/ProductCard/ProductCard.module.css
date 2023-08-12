@@ -1,0 +1,16 @@
+.product-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.product-image {
+  flex-grow: 1;
+  object-fit: contain;
+  max-width: 100%;
+}
+
+.product-description {
+  max-height: 150px;
+  overflow: auto;
+}
