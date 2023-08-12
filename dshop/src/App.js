@@ -22,7 +22,7 @@ function App() {
   return (
     <Router>
       <React.Fragment>
-        <NavBar cardData={cardData} />
+        <NavBar />
         <Routes>
           <Route path="/" element={<MainBody />} />
           <Route path="/products/:productId" element={<ProductDetails />} />

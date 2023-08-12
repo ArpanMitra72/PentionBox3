@@ -10,3 +10,20 @@
   padding-left: 10px;
   padding-right: 10px;
 }
+.sidebar {
+  background-color: #f4f4f4;
+  padding: 20px;
+}
+
+.searchBar {
+  margin-bottom: 20px;
+}
+
+.filterSection {
+  margin-bottom: 20px;
+}
+
+.mainContent {
+  padding: 20px;
+  background-color: #fff;
+}

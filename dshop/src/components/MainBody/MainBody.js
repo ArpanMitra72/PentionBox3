@@ -7,6 +7,8 @@ import SortDropdown from "../Sort/Sort";
 import ProductDetail from "../ProductDetail/ProductDetails";
 import CategoryDropdown from "../Category/CategoryDropdown";
 import CategoryPriceDropDown from "../Category/CategoryPriceDropDown";
+import Search from "../SearchBar/Search";
+import styles from "./MainBody.module.css";
 
 function MainBody() {
   const [cardData, setCardData] = useState([]);
@@ -14,6 +16,7 @@ function MainBody() {
   const [ratingSortOrder, setRatingSortOrder] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedPriceCategory, setSelectedCategoryPrice] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     axios
@@ -55,6 +58,11 @@ function MainBody() {
     setSelectedCategoryPrice(newCategoryPrice);
   };
 
+  const handleSearchResults = (results) => {
+    setCardData(results);
+    setSearchTerm(""); // Clear searchTerm when search is performed
+  };
+
   const renderCards = () => {
     if (selectedCategory) {
       return cardData
@@ -70,6 +78,13 @@ function MainBody() {
           (product) => product.price >= minPrice && product.price <= maxPrice
         )
         .map((product) => <ProductCard key={product.id} product={product} />);
+    } else if (searchTerm) {
+      // Add this condition for search results
+      return cardData
+        .filter((product) =>
+          product.title.toLowerCase().includes(searchTerm.toLowerCase())
+        )
+        .map((product) => <ProductCard key={product.id} product={product} />);
     } else {
       return cardData.map((product) => (
         <ProductCard key={product.id} product={product} />
@@ -80,18 +95,27 @@ function MainBody() {
   return (
     <Container fluid>
       <Row>
-        <Col md={3}>
-          <SortDropdown
-            onSortChange={handleSortChange}
-            onRatingSortChange={handleRatingSortChange}
-          />
-          <CategoryDropdown onCategoryChange={handleCategoryChange} />
-          <CategoryPriceDropDown
-            onCategoryPriceChange={handleCategoryPriceChange}
-          />
+        <Col md={3} className={styles.sidebar}>
+          <div className={styles.searchBar}>
+            <Search
+              placeholder="Search by name or description"
+              data={cardData}
+              onSearchResults={handleSearchResults}
+            />
+          </div>
+          <div className={styles.filterSection}>
+            <SortDropdown
+              onSortChange={handleSortChange}
+              onRatingSortChange={handleRatingSortChange}
+            />
+            <CategoryDropdown onCategoryChange={handleCategoryChange} />
+            <CategoryPriceDropDown
+              onCategoryPriceChange={handleCategoryPriceChange}
+            />
+          </div>
         </Col>
         <Col md={9}>
-          <Container className="Main-Body">
+          <Container className={styles.mainContent}>
             <Row className="product-card-row">{renderCards()}</Row>
           </Container>
         </Col>

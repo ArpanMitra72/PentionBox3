@@ -52,6 +52,8 @@ function ProductDetail({ match }) {
           <h2>{product.title}</h2>
           <p>{product.description}</p>
           <p>Price: ${product.price}</p>
+          <p>Rating: {product.rating.rate}</p>
+          <p>Total number of rating: {product.rating.count}</p>
           {/* Add your form components here */}
         </Col>
       </Row>
